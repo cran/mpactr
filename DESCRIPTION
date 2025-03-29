@@ -1,6 +1,6 @@
 Package: mpactr
 Title: Correction of Preprocessed MS Data
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: c(
     person("Allison", "Mason", , "masonar@umich.edu", role = c("aut"),
             comment = c(ORCID = "0000-0003-1339-1592")),
@@ -24,7 +24,7 @@ VignetteBuilder: knitr
 LinkingTo: Rcpp
 License: GPL (>= 3)
 NeedsCompilation: yes
-Packaged: 2025-03-13 19:21:04 UTC; grejoh
+Packaged: 2025-03-28 19:36:09 UTC; grejoh
 Author: Allison Mason [aut] (<https://orcid.org/0000-0003-1339-1592>),
   Gregory Johnson [aut] (<https://orcid.org/0009-0008-3890-0297>),
   Patrick Schloss [aut, cre, cph]
@@ -32,4 +32,4 @@ Author: Allison Mason [aut] (<https://orcid.org/0000-0003-1339-1592>),
 Maintainer: Patrick Schloss <pschloss@umich.edu>
 Depends: R (>= 3.5.0)
 Repository: CRAN
-Date/Publication: 2025-03-13 19:50:02 UTC
+Date/Publication: 2025-03-29 00:30:05 UTC
