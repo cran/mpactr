@@ -26,7 +26,7 @@ data_filtered <- data |>
   filter_mispicked_ions(merge_peaks = TRUE, merge_method = "sum") |>
   filter_group(group_to_remove = "Solvent_Blank") |>
   filter_group(group_to_remove = "Media") |>
-  filter_cv(cv_threshold = 0.2, cv_param = "median")
+  filter_cv(cv_threshold = 0.2)
 
 ## -----------------------------------------------------------------------------
 plot_qc_tree(data_filtered)

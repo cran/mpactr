@@ -91,13 +91,13 @@ data_media_blank <- filter_group(data,
 
 ## -----------------------------------------------------------------------------
 data_rep <- filter_cv(data,
-  cv_threshold = 0.2, cv_param = "median",
+  cv_threshold = 0.2,
   copy_object = TRUE
 )
 
 ## -----------------------------------------------------------------------------
 cv <- get_cv_data(data_rep) %>%
-  pivot_longer(cols = c("mean_cv", "median_cv"),
+  pivot_longer(cols = c("cv"),
                names_to = "param",
                values_to = "cv") %>%
   nest(.by = param) %>%
@@ -114,7 +114,7 @@ head(cv$data[[1]])
 
 ## -----------------------------------------------------------------------------
 cv_thresh_percent <- cv %>%
-  filter(param == "median_cv") %>%
+  filter(param == "cv") %>%
   unnest(cols = data) %>%
   mutate(diff_cv_thresh = abs(cv - 0.2)) %>%
   slice_min(diff_cv_thresh, n = 1) %>%
@@ -125,8 +125,8 @@ cv_thresh_percent
 ## -----------------------------------------------------------------------------
 cv %>%
   unnest(cols = data) %>%
-  mutate(param = factor(param, levels = c("mean_cv", "median_cv"),
-                        labels = c("mean", "median"))) %>%
+  mutate(param = factor(param, levels = c("cv"),
+                        labels = c("cv"))) %>%
   ggplot() +
   aes(x = cv, y = index_scale, group = param, color = param) +
   geom_line(linewidth = 2) +
@@ -164,7 +164,7 @@ data <- import_data(peak_table = example_path("PTY087I2_dataset.csv"),
 
 data_filtered <- filter_mispicked_ions(data, merge_method = "sum") |>
   filter_group(group_to_remove = "Blanks") |>
-  filter_cv(cv_threshold = 0.2, cv_param = "median") |>
+  filter_cv(cv_threshold = 0.2) |>
   filter_group(group_to_remove = "Media")
 
 ## -----------------------------------------------------------------------------
