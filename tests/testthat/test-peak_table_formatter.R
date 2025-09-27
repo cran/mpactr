@@ -1,4 +1,5 @@
 test_that("progenesis_formatter reads data correctly", {
+  limit_cores()
   pt <- progenesis_formatter(test_path("exttestdata",
                                        "102623_peaktable_coculture_simple.csv"))
 
@@ -7,6 +8,7 @@ test_that("progenesis_formatter reads data correctly", {
   expect_true(nrow(pt$peak_table) > 0)
 })
 test_that("metaboscape reads data correctly", {
+  limit_cores()
   samples <- c(
     "UM1850B_ANGDT_0.25_mL_36_1_4792",
     "UM1850B_ANGDT_0.25_mL_36_1_4802",
@@ -29,11 +31,9 @@ test_that("metaboscape reads data correctly", {
   expect_true(nrow(pt$peak_table) > 0)
   expect_equal(colnames(pt$peak_table), c("Compound", "mz", "rt", samples))
 })
-test_that("mz_mine formatter reads data correctly", {
-
-})
 
 test_that("format_by_type formats the data properly based on the parameters", {
+  limit_cores()
   samples <- c(
     "UM1850B_ANGDT_0.25_mL_36_1_4792",
     "UM1850B_ANGDT_0.25_mL_36_1_4802",
@@ -69,6 +69,7 @@ test_that("format_by_type formats the data properly based on the parameters", {
 
 test_that("Formatter errors when giving a type that
 does not exist", {
+            limit_cores()
             samples <- c(
               "UM1850B_ANGDT_0.25_mL_36_1_4792",
               "UM1850B_ANGDT_0.25_mL_36_1_4802",
@@ -89,6 +90,7 @@ does not exist", {
           })
 
 test_that("The 'None' format option works as expected", {
+  limit_cores()
   samples <- c(
     "UM1850B_ANGDT_0.25_mL_36_1_4792",
     "UM1850B_ANGDT_0.25_mL_36_1_4802",
@@ -112,6 +114,7 @@ test_that("The 'None' format option works as expected", {
 })
 
 test_that("format_by_type errors when given incomplete file paths", {
+  limit_cores()
   pt <- "peak_table_post_formatted.csv"
   expect_error(format_by_type(pt,
                               type_of_peak_table = "None"))

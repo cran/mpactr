@@ -7,15 +7,19 @@ knitr::opts_chunk$set(
 ## ----setup, echo = FALSE, message=FALSE---------------------------------------
 library(mpactr)
 library(tidyverse)
+library(data.table)
+
+## ----include = FALSE----------------------------------------------------------
+limit_cores()
 
 ## -----------------------------------------------------------------------------
-samplelist <- read_csv(example_path("PTY087I2_samplelist.csv"))
+samplelist <- fread(example_path("PTY087I2_samplelist.csv"))
 
 ## -----------------------------------------------------------------------------
-metadata <- read_csv(example_path("PTY087I2_extractmetadata.csv"))
+metadata <- fread(example_path("PTY087I2_extractmetadata.csv"))
 
 ## -----------------------------------------------------------------------------
-samples <- read_csv(example_path("PTY087I2_dataset.csv"), skip = 2) %>%
+samples <- fread(example_path("PTY087I2_dataset.csv"), skip = 2) %>%
   colnames() %>%
   str_subset(., "200826")
 

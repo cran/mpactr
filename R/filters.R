@@ -47,6 +47,9 @@
 #' @export
 #'
 #' @examples
+#'  \dontshow{
+#' limit_cores()
+#' }
 #' data <- import_data(
 #'   example_path("coculture_peak_table.csv"),
 #'   example_path("metadata.csv"),
@@ -144,6 +147,9 @@ filter_mispicked_ions <- function(mpactr_object,
 #' @export
 #'
 #' @examples
+#'  \dontshow{
+#' limit_cores()
+#' }
 #' data <- import_data(
 #'   example_path("coculture_peak_table.csv"),
 #'   example_path("metadata.csv"),
@@ -192,7 +198,7 @@ filter_group <- function(mpactr_object,
 #' @description
 #' `filter_cv()` removes feature ions that are found to be non-reproducible
 #' between technical injection replicates. Reproducibility is assessed via mean
-#' or median coefficient of variation (CV) between technical replicates. As
+#' coefficient of variation (CV) between technical replicates. As
 #' such, this filter is expecting an input dataset with at least two replicate
 #' injections per sample.
 #'
@@ -218,7 +224,9 @@ filter_group <- function(mpactr_object,
 #' @export
 #'
 #' @examples
-#'
+#'  \dontshow{
+#' limit_cores()
+#' }
 #' data <- import_data(
 #'   example_path("coculture_peak_table.csv"),
 #'   example_path("metadata.csv"),
@@ -288,6 +296,9 @@ filter_cv <- function(mpactr_object,
 #' @export
 #'
 #' @examples
+#'  \dontshow{
+#' limit_cores()
+#' }
 #' data <- import_data(
 #'   example_path("coculture_peak_table.csv"),
 #'   example_path("metadata.csv"),

@@ -1,6 +1,6 @@
 Package: mpactr
 Title: Correction of Preprocessed MS Data
-Version: 0.3.0
+Version: 0.3.1
 Authors@R: c(
     person("Allison", "Mason", , "masonar@umich.edu", role = c("aut"),
             comment = c(ORCID = "0000-0003-1339-1592")),
@@ -15,8 +15,7 @@ RoxygenNote: 7.3.2
 Suggests: knitr, rmarkdown, testthat (>= 3.0.0), tidyverse, plotly,
         Hmisc, corrplot, ggdendro, ggtext
 Config/testthat/edition: 3
-Imports: cli, data.table, ggplot2, R6, Rcpp, readr, stats, treemapify,
-        viridis
+Imports: cli, data.table, ggplot2, R6, Rcpp, stats, treemapify, viridis
 LazyData: true
 URL: https://www.mums2.org/mpactr/, https://github.com/mums2/mpactr
 BugReports: https://github.com/mums2/mpactr/issues
@@ -24,7 +23,7 @@ VignetteBuilder: knitr
 LinkingTo: Rcpp
 License: GPL (>= 3)
 NeedsCompilation: yes
-Packaged: 2025-09-05 18:01:44 UTC; grejoh
+Packaged: 2025-09-26 17:04:15 UTC; grejoh
 Author: Allison Mason [aut] (ORCID: <https://orcid.org/0000-0003-1339-1592>),
   Gregory Johnson [aut] (ORCID: <https://orcid.org/0009-0008-3890-0297>),
   Patrick Schloss [aut, cre, cph] (ORCID:
@@ -32,4 +31,4 @@ Author: Allison Mason [aut] (ORCID: <https://orcid.org/0000-0003-1339-1592>),
 Maintainer: Patrick Schloss <pschloss@umich.edu>
 Depends: R (>= 3.5.0)
 Repository: CRAN
-Date/Publication: 2025-09-07 22:10:10 UTC
+Date/Publication: 2025-09-27 23:30:25 UTC

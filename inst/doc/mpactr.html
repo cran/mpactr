@@ -343,7 +343,8 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># library(mpactr)</span></span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(mpactr)</span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(data.table)</span></code></pre></div>
 <div id="load-data-into-r" class="section level2">
 <h2>Load data into R</h2>
 <p>mpactr requires 2 files as input: a feature table and metadata file.
@@ -377,43 +378,18 @@ sample list and metadata. mpactr accepts a single file, so we need to
 combine these in one prior to import with
 <code>import_data()</code>.</p>
 <p>Loading the sample list…</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>samplelist <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">example_path</span>(<span class="st">&quot;PTY087I2_samplelist.csv&quot;</span>))</span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co">#&gt; Rows: 38 Columns: 8</span></span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#&gt; ── Column specification ────────────────────────────────────────────────────────</span></span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt; Delimiter: &quot;,&quot;</span></span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#&gt; chr  (4): Injection, MS method, LC method, Sample_Code</span></span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co">#&gt; dbl  (1): Injection volume</span></span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt; lgl  (2): File Text, Sample_Notes</span></span>
-<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt; time (1): Vial_Position</span></span>
-<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt; ℹ Use `spec()` to retrieve the full column specification for this data.</span></span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt; ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>samplelist <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="fu">example_path</span>(<span class="st">&quot;PTY087I2_samplelist.csv&quot;</span>))</span></code></pre></div>
 <p>Loading the metadata list…</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">example_path</span>(<span class="st">&quot;PTY087I2_extractmetadata.csv&quot;</span>))</span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co">#&gt; Rows: 10 Columns: 4</span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#&gt; ── Column specification ────────────────────────────────────────────────────────</span></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#&gt; Delimiter: &quot;,&quot;</span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#&gt; chr (4): Sample_Code, Organism, Biological_Group, Extract_Notes</span></span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#&gt; ℹ Use `spec()` to retrieve the full column specification for this data.</span></span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#&gt; ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="fu">example_path</span>(<span class="st">&quot;PTY087I2_extractmetadata.csv&quot;</span>))</span></code></pre></div>
 <p>Our sample list contains additional blank samples that are not in the
 feature table, and therefore should be removed prior to import.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">example_path</span>(<span class="st">&quot;PTY087I2_dataset.csv&quot;</span>), <span class="at">skip =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="fu">example_path</span>(<span class="st">&quot;PTY087I2_dataset.csv&quot;</span>), <span class="at">skip =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="fu">colnames</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  <span class="fu">str_subset</span>(., <span class="st">&quot;200826&quot;</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt; Rows: 4956 Columns: 33</span></span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt; ── Column specification ────────────────────────────────────────────────────────</span></span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt; Delimiter: &quot;,&quot;</span></span>
-<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt; chr  (1): Compound</span></span>
-<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt; dbl (32): m/z, Retention time (min), 200826_blank1_r1, 200826_blank1_r2, 200...</span></span>
-<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co">#&gt; ℹ Use `spec()` to retrieve the full column specification for this data.</span></span>
-<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#&gt; ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></span>
-<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>meta_data <span class="ot">&lt;-</span> samplelist <span class="sc">%&gt;%</span></span>
-<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a>  <span class="fu">left_join</span>(metadata, <span class="at">by =</span> <span class="st">&quot;Sample_Code&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a>  <span class="fu">filter</span>(Injection <span class="sc">%in%</span> samples)</span></code></pre></div>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>meta_data <span class="ot">&lt;-</span> samplelist <span class="sc">%&gt;%</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  <span class="fu">left_join</span>(metadata, <span class="at">by =</span> <span class="st">&quot;Sample_Code&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>  <span class="fu">filter</span>(Injection <span class="sc">%in%</span> samples)</span></code></pre></div>
 <p>Now we can import the data. We will provide the url for the
 <code>peak_table</code>, and our reformatted meta_data object. This peak
 table was exported from Progenesis, so we will set the
@@ -654,14 +630,14 @@ have been applied, use <code>get_peak_table()</code>:</p>
 <span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="co">#&gt; 4: 200826_media1_r1        NA           NA RMS20181105_Balunas_11min_mse</span></span>
 <span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="co">#&gt; 5: 200826_media1_r2        NA           NA RMS20181105_Balunas_11min_mse</span></span>
 <span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co">#&gt;                                                         LC method Vial_Position</span></span>
-<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co">#&gt;                                                            &lt;char&gt;         &lt;hms&gt;</span></span>
-<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="co">#&gt; 1: jlb20170623_Balunas_11minRogermethod_450uLmin_5to98_col3_noPDA      01:16:00</span></span>
-<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="co">#&gt; 2: jlb20170623_Balunas_11minRogermethod_450uLmin_5to98_col3_noPDA      01:16:00</span></span>
-<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="co">#&gt; 3: jlb20170623_Balunas_11minRogermethod_450uLmin_5to98_col3_noPDA      01:16:00</span></span>
-<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a><span class="co">#&gt; 4: jlb20170623_Balunas_11minRogermethod_450uLmin_5to98_col3_noPDA      01:01:00</span></span>
-<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a><span class="co">#&gt; 5: jlb20170623_Balunas_11minRogermethod_450uLmin_5to98_col3_noPDA      01:01:00</span></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co">#&gt;                                                            &lt;char&gt;        &lt;char&gt;</span></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="co">#&gt; 1: jlb20170623_Balunas_11minRogermethod_450uLmin_5to98_col3_noPDA          1:16</span></span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="co">#&gt; 2: jlb20170623_Balunas_11minRogermethod_450uLmin_5to98_col3_noPDA          1:16</span></span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="co">#&gt; 3: jlb20170623_Balunas_11minRogermethod_450uLmin_5to98_col3_noPDA          1:16</span></span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a><span class="co">#&gt; 4: jlb20170623_Balunas_11minRogermethod_450uLmin_5to98_col3_noPDA          1:01</span></span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a><span class="co">#&gt; 5: jlb20170623_Balunas_11minRogermethod_450uLmin_5to98_col3_noPDA          1:01</span></span>
 <span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="co">#&gt;    Injection volume Sample_Code  Organism Biological_Group Extract_Notes</span></span>
-<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a><span class="co">#&gt;               &lt;num&gt;      &lt;char&gt;    &lt;char&gt;           &lt;char&gt;        &lt;char&gt;</span></span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a><span class="co">#&gt;               &lt;int&gt;      &lt;char&gt;    &lt;char&gt;           &lt;char&gt;        &lt;char&gt;</span></span>
 <span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a><span class="co">#&gt; 1:               10       Blank  50% MeOH           Blanks      50% MeOH</span></span>
 <span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a><span class="co">#&gt; 2:               10       Blank  50% MeOH           Blanks      50% MeOH</span></span>
 <span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a><span class="co">#&gt; 3:               10       Blank  50% MeOH           Blanks      50% MeOH</span></span>
@@ -885,10 +861,9 @@ are identified (see Chaining filters together below).</p>
 <p>Ions whose abundance are not consistent between technical replicates
 (<em>i.e.</em>, non-reproducible) may not be reliable for analysis and
 therefore should be removed from the feature table. Non-reproducible
-ions are identified by mean or median coefficient of variation (CV)
-between technical replicates with <code>filter_cv()</code>. Note - this
-filter cannot be applied to data that does not contain technical
-replicates.</p>
+ions are identified by coefficient of variation (CV) between technical
+replicates with <code>filter_cv()</code>. Note - this filter cannot be
+applied to data that does not contain technical replicates.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a>data_rep <span class="ot">&lt;-</span> <span class="fu">filter_cv</span>(data,</span>
 <span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>  <span class="at">cv_threshold =</span> <span class="fl">0.2</span>,</span>
 <span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>  <span class="at">copy_object =</span> <span class="cn">TRUE</span></span>

@@ -15,6 +15,9 @@ library(corrplot)
 library(ggdendro)
 library(ggtext)
 
+## ----include = FALSE----------------------------------------------------------
+limit_cores()
+
 ## -----------------------------------------------------------------------------
 data <- import_data(example_path("cultures_peak_table.csv"),
   example_path("cultures_metadata.csv"),
