@@ -102,7 +102,7 @@ ft[1:5, 1:7]
 
 ## -----------------------------------------------------------------------------
 counts <- ft %>%
-  select(Compound, all_of(get_meta_data(data_filtered)$Injection)) %>%
+  select(Compound, all_of(get_metadata(data_filtered)$injection)) %>%
   column_to_rownames(var = "Compound") %>%
   select(where(~ sum(.x) != 0))
 
@@ -125,14 +125,14 @@ corrplot(counts_cor$r,
 )
 
 ## -----------------------------------------------------------------------------
-meta <- get_meta_data(data_filtered)
+meta <- get_metadata(data_filtered)
 
 counts %>%
   rownames_to_column(var = "Compound") %>%
   pivot_longer(
     cols = starts_with("102623"),
-    names_to = "Injection",
-    values_to = "Intensity"
+    names_to = "injection",
+    values_to = "intensity"
   ) %>%
   head()
 
@@ -141,10 +141,10 @@ counts %>%
   rownames_to_column(var = "Compound") %>%
   pivot_longer(
     cols = starts_with("102623"),
-    names_to = "Injection",
-    values_to = "Intensity"
+    names_to = "injection",
+    values_to = "intensity"
   ) %>%
-  left_join(meta, by = "Injection") %>%
+  left_join(meta, by = "injection") %>%
   head()
 
 ## -----------------------------------------------------------------------------
@@ -152,13 +152,13 @@ counts %>%
   rownames_to_column(var = "Compound") %>%
   pivot_longer(
     cols = starts_with("102623"),
-    names_to = "Injection",
-    values_to = "Intensity"
+    names_to = "injection",
+    values_to = "intensity"
   ) %>%
-  left_join(meta, by = "Injection") %>%
+  left_join(meta, by = "injection") %>%
   summarise(
-    mean_intensity = mean(Intensity),
-    .by = c(Compound, Sample_Code)
+    mean_intensity = mean(intensity),
+    .by = c(Compound, sample_code)
   ) %>%
   head()
 
@@ -167,16 +167,16 @@ sample_counts <- counts %>%
   rownames_to_column(var = "Compound") %>%
   pivot_longer(
     cols = starts_with("102623"),
-    names_to = "Injection",
-    values_to = "Intensity"
+    names_to = "injection",
+    values_to = "intensity"
   ) %>%
-  left_join(meta, by = "Injection") %>%
+  left_join(meta, by = "injection") %>%
   summarise(
-    mean_intensity = mean(Intensity),
-    .by = c(Compound, Sample_Code)
+    mean_intensity = mean(intensity),
+    .by = c(Compound, sample_code)
   ) %>%
   pivot_wider(
-    names_from = Sample_Code,
+    names_from = sample_code,
     values_from = mean_intensity
   ) %>%
   column_to_rownames(var = "Compound")
@@ -200,16 +200,16 @@ group_counts <- counts %>%
   rownames_to_column(var = "Compound") %>%
   pivot_longer(
     cols = starts_with("102623"),
-    names_to = "Injection",
-    values_to = "Intensity"
+    names_to = "injection",
+    values_to = "intensity"
   ) %>%
-  left_join(meta, by = "Injection") %>%
+  left_join(meta, by = "injection") %>%
   summarise(
-    mean_intensity = mean(Intensity),
-    .by = c(Compound, Biological_Group)
+    mean_intensity = mean(intensity),
+    .by = c(Compound, biological_group)
   ) %>%
   pivot_wider(
-    names_from = Biological_Group,
+    names_from = biological_group,
     values_from = mean_intensity
   ) %>%
   column_to_rownames(var = "Compound")
@@ -253,19 +253,19 @@ ggplot(segment(den_data)) +
 
 ## -----------------------------------------------------------------------------
 get_group_averages(data_filtered) %>%
-  filter(Biological_Group == "Coculture" |
-           Biological_Group == "ANG18") %>%
-  select(Compound, Biological_Group, average) %>%
-  pivot_wider(names_from = Biological_Group, values_from = average) %>%
+  filter(biological_group == "Coculture" |
+           biological_group == "ANG18") %>%
+  select(Compound, biological_group, average) %>%
+  pivot_wider(names_from = biological_group, values_from = average) %>%
   mutate(fc = Coculture / ANG18) %>%
   head()
 
 ## -----------------------------------------------------------------------------
 get_group_averages(data_filtered) %>%
-  filter(Biological_Group == "Coculture" |
-           Biological_Group == "ANG18") %>%
-  select(Compound, Biological_Group, average) %>%
-  pivot_wider(names_from = Biological_Group, values_from = average) %>%
+  filter(biological_group == "Coculture" |
+           biological_group == "ANG18") %>%
+  select(Compound, biological_group, average) %>%
+  pivot_wider(names_from = biological_group, values_from = average) %>%
   mutate(nonzero_compound = if_else(Coculture == 0 & ANG18 == 0,
                                     FALSE,
                                     TRUE)) %>%
@@ -275,34 +275,34 @@ get_group_averages(data_filtered) %>%
 
 ## -----------------------------------------------------------------------------
 get_group_averages(data_filtered) %>%
-  filter(Biological_Group == "Coculture" |
-           Biological_Group == "ANG18") %>%
-  select(Compound, Biological_Group, average) %>%
+  filter(biological_group == "Coculture" |
+           biological_group == "ANG18") %>%
+  select(Compound, biological_group, average) %>%
   head()
 
 ## -----------------------------------------------------------------------------
 get_group_averages(data_filtered) %>%
-  filter(Biological_Group == "Coculture" |
-           Biological_Group == "ANG18") %>%
-  select(Compound, Biological_Group, average) %>%
+  filter(biological_group == "Coculture" |
+           biological_group == "ANG18") %>%
+  select(Compound, biological_group, average) %>%
   head()
 
 ## -----------------------------------------------------------------------------
 get_group_averages(data_filtered) %>%
-  filter(Biological_Group == "Coculture" |
-           Biological_Group == "ANG18") %>%
-  select(Compound, Biological_Group, average) %>%
+  filter(biological_group == "Coculture" |
+           biological_group == "ANG18") %>%
+  select(Compound, biological_group, average) %>%
   mutate(average = average + 0.001) %>%
-  pivot_wider(names_from = Biological_Group, values_from = average) %>%
+  pivot_wider(names_from = biological_group, values_from = average) %>%
   head()
 
 ## -----------------------------------------------------------------------------
 get_group_averages(data_filtered) %>%
-  filter(Biological_Group == "Coculture" |
-           Biological_Group == "ANG18") %>%
-  select(Compound, Biological_Group, average) %>%
+  filter(biological_group == "Coculture" |
+           biological_group == "ANG18") %>%
+  select(Compound, biological_group, average) %>%
   mutate(average = average + 0.001) %>%
-  pivot_wider(names_from = Biological_Group, values_from = average) %>%
+  pivot_wider(names_from = biological_group, values_from = average) %>%
   mutate(nonzero_compound = if_else(Coculture == 0.001 & ANG18 == 0.001,
                                     FALSE,
                                     TRUE)) %>%
@@ -311,11 +311,11 @@ get_group_averages(data_filtered) %>%
 
 ## -----------------------------------------------------------------------------
 get_group_averages(data_filtered) %>%
-  filter(Biological_Group == "Coculture" |
-           Biological_Group == "ANG18") %>%
-  select(Compound, Biological_Group, average) %>%
+  filter(biological_group == "Coculture" |
+           biological_group == "ANG18") %>%
+  select(Compound, biological_group, average) %>%
   mutate(average = average + 0.001) %>%
-  pivot_wider(names_from = Biological_Group, values_from = average) %>%
+  pivot_wider(names_from = biological_group, values_from = average) %>%
   mutate(nonzero_compound = if_else(Coculture == 0.001 & ANG18 == 0.001,
                                     FALSE,
                                     TRUE)) %>%
@@ -325,11 +325,11 @@ get_group_averages(data_filtered) %>%
 
 ## -----------------------------------------------------------------------------
 foldchanges <- get_group_averages(data_filtered) %>%
-  filter(Biological_Group == "Coculture" |
-           Biological_Group == "ANG18") %>%
-  select(Compound, Biological_Group, average) %>%
+  filter(biological_group == "Coculture" |
+           biological_group == "ANG18") %>%
+  select(Compound, biological_group, average) %>%
   mutate(average = average + 0.001) %>%
-  pivot_wider(names_from = Biological_Group, values_from = average) %>%
+  pivot_wider(names_from = biological_group, values_from = average) %>%
   mutate(nonzero_compound = if_else(Coculture == 0.001 & ANG18 == 0.001,
                                     FALSE,
                                     TRUE)) %>%
@@ -393,20 +393,20 @@ stats <- get_group_averages(data_filtered) %>%
     techRSD = if_else(is.na(techRSD), 0, techRSD),
     neff = calc_samplesize_ws(techRSD, techn, BiolRSD, Bioln) + 1
   ) %>%
-  filter(Biological_Group %in% my_comp)
+  filter(biological_group %in% my_comp)
 
 head(stats)
 
 ## -----------------------------------------------------------------------------
 denom <- stats %>%
   summarise(den = combASD^2 / (neff),
-            .by = c("Compound", "Biological_Group")) %>%
+            .by = c("Compound", "biological_group")) %>%
   mutate(den = if_else(!is.finite(den), 0, den)) %>%
   summarise(denom = sqrt(sum(den)), .by = c("Compound"))
 
 t_test <- stats %>%
-  select(Compound, Biological_Group, average) %>%
-  pivot_wider(names_from = Biological_Group, values_from = average) %>%
+  select(Compound, biological_group, average) %>%
+  pivot_wider(names_from = biological_group, values_from = average) %>%
   mutate(numerator = (Coculture - ANG18)) %>% # experimental - control
   left_join(denom, by = "Compound") %>%
   mutate(t = abs(numerator / denom))
@@ -415,9 +415,9 @@ head(t_test)
 
 ## -----------------------------------------------------------------------------
 df <- stats %>%
-  select(Compound, Biological_Group, neff) %>%
+  select(Compound, biological_group, neff) %>%
   mutate(neff = if_else(!is.finite(neff), 0, neff)) %>%
-  pivot_wider(names_from = Biological_Group, values_from = neff) %>%
+  pivot_wider(names_from = biological_group, values_from = neff) %>%
   mutate(deg = Coculture + ANG18 - 2) %>%
   select(Compound, deg)
 

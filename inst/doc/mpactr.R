@@ -43,7 +43,7 @@ get_raw_data(data)[1:5, 1:8]
 get_peak_table(data)[1:5, 1:8]
 
 ## -----------------------------------------------------------------------------
-get_meta_data(data)[1:5, ]
+get_metadata(data)[1:5, ]
 
 ## -----------------------------------------------------------------------------
 data2 <- import_data(peak_table = example_path("PTY087I2_dataset.csv"),
