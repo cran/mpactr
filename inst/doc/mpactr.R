@@ -23,13 +23,13 @@ samples <- fread(example_path("PTY087I2_dataset.csv"), skip = 2) %>%
   colnames() %>%
   str_subset(., "200826")
 
-meta_data <- samplelist %>%
+metadata <- samplelist %>%
   left_join(metadata, by = "Sample_Code") %>%
   filter(Injection %in% samples)
 
 ## -----------------------------------------------------------------------------
 data <- import_data(peak_table = example_path("PTY087I2_dataset.csv"),
-  meta_data = meta_data,
+  metadata = metadata,
   format = "Progenesis"
 )
 
@@ -47,7 +47,7 @@ get_metadata(data)[1:5, ]
 
 ## -----------------------------------------------------------------------------
 data2 <- import_data(peak_table = example_path("PTY087I2_dataset.csv"),
-  meta_data = meta_data,
+  metadata = metadata,
   format = "Progenesis"
 )
 
@@ -162,7 +162,7 @@ data_insource <- filter_insource_ions(data,
 
 ## -----------------------------------------------------------------------------
 data <- import_data(peak_table = example_path("PTY087I2_dataset.csv"),
-  meta_data = meta_data,
+  metadata = metadata,
   format = "Progenesis"
 )
 

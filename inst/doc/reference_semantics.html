@@ -359,7 +359,7 @@ below.</p>
 <span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a></span>
 <span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a></span>
 <span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="fu">get_peak_table</span>(data2)[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
-<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt;       Compound       mz         rt 102623_UM1848B_JC1_69_1_5004</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt;       compound       mz         rt 102623_UM1848B_JC1_69_1_5004</span></span>
 <span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt;         &lt;char&gt;    &lt;num&gt;      &lt;num&gt;                        &lt;num&gt;</span></span>
 <span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt;    1:        1 256.0883  0.7748333                         0.00</span></span>
 <span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt;    2:        2 484.2921  0.7756667                       546.56</span></span>
@@ -398,8 +398,8 @@ below.</p>
 <span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co">#&gt; ✔ 73 ions failed the mispicked filter, 1261 ions remain.</span></span>
 <span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a></span>
 <span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="fu">get_peak_table</span>(data2_mispicked)[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
-<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="co">#&gt; Key: &lt;Compound, mz, kmd, rt&gt;</span></span>
-<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="co">#&gt;       Compound       mz     kmd        rt 102423_Blank_77_1_5095</span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="co">#&gt; Key: &lt;compound, mz, kmd, rt&gt;</span></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="co">#&gt;       compound       mz     kmd        rt 102423_Blank_77_1_5095</span></span>
 <span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="co">#&gt;         &lt;char&gt;    &lt;num&gt;   &lt;num&gt;     &lt;num&gt;                  &lt;num&gt;</span></span>
 <span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="co">#&gt;    1:        1 256.0883 0.08831 0.7748333                      0</span></span>
 <span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="co">#&gt;    2:       10 340.2040 0.20399 0.7916667                      0</span></span>
@@ -419,8 +419,8 @@ semantics) results in 1261 ions in the feature table.</p>
 the original <code>data2</code> object was also updated and now has 1261
 ions in the feature table:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">get_peak_table</span>(data2)[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]</span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co">#&gt; Key: &lt;Compound, mz, kmd, rt&gt;</span></span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt;       Compound       mz     kmd        rt 102423_Blank_77_1_5095</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co">#&gt; Key: &lt;compound, mz, kmd, rt&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt;       compound       mz     kmd        rt 102423_Blank_77_1_5095</span></span>
 <span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt;         &lt;char&gt;    &lt;num&gt;   &lt;num&gt;     &lt;num&gt;                  &lt;num&gt;</span></span>
 <span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt;    1:        1 256.0883 0.08831 0.7748333                      0</span></span>
 <span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt;    2:       10 340.2040 0.20399 0.7916667                      0</span></span>
